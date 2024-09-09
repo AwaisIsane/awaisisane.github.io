@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Awais Isane Blog]]></title>
+        <description><![CDATA[blogs written by Awais]]></description>
+        <link>https://awaisisane.com</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Mon, 09 Sep 2024 19:35:23 GMT</lastBuildDate>
+        <atom:link href="https://awaisisane.com/feed.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Mon, 09 Sep 2024 19:35:23 GMT</pubDate>
+        <copyright><![CDATA[2024 Awais Isane]]></copyright>
+        <language><![CDATA[en]]></language>
+        <item>
+            <title><![CDATA[About Me]]></title>
+            <description><![CDATA[about me blog]]></description>
+            <link>https://awaisisane.com/about-me</link>
+            <guid isPermaLink="false">https://awaisisane.com/about-me</guid>
+            <dc:creator><![CDATA[Awais Isane]]></dc:creator>
+            <pubDate>Tue, 10 Sep 2024 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
