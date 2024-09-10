@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://awaisisane.com</loc>
-<lastmod>2024-09-09T19:48:42.844Z</lastmod>
+<loc>https://awaisisane.github.io</loc>
+<lastmod>2024-09-10T08:58:52.878Z</lastmod>
 </url>
 <url>
-<loc>https://awaisisane.com/projects</loc>
-<lastmod>2024-09-09T19:48:42.844Z</lastmod>
+<loc>https://awaisisane.github.io/projects</loc>
+<lastmod>2024-09-10T08:58:52.878Z</lastmod>
 </url>
 <url>
-<loc>https://awaisisane.com/blogs</loc>
-<lastmod>2024-09-09T19:48:42.844Z</lastmod>
+<loc>https://awaisisane.github.io/blogs</loc>
+<lastmod>2024-09-10T08:58:52.878Z</lastmod>
 </url>
 <url>
-<loc>https://awaisisane.com/blog/about-me</loc>
+<loc>https://awaisisane.github.io/blog/about-me</loc>
+<lastmod>2024-09-10T00:00:00.000Z</lastmod>
+</url>
+<url>
+<loc>https://awaisisane.github.io/blog/deploy-nextjs-site-to-github-pages</loc>
+<lastmod>2024-09-10T00:00:00.000Z</lastmod>
+</url>
+<url>
+<loc>https://awaisisane.github.io/blog/how-i-created-my-blog-site</loc>
 <lastmod>2024-09-10T00:00:00.000Z</lastmod>
 </url>
 </urlset>

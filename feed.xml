@@ -2,18 +2,34 @@
     <channel>
         <title><![CDATA[Awais Isane Blog]]></title>
         <description><![CDATA[blogs written by Awais]]></description>
-        <link>https://awaisisane.com</link>
+        <link>https://awaisisane.github.io</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 09 Sep 2024 19:48:42 GMT</lastBuildDate>
-        <atom:link href="https://awaisisane.com/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 09 Sep 2024 19:48:42 GMT</pubDate>
+        <lastBuildDate>Tue, 10 Sep 2024 08:58:52 GMT</lastBuildDate>
+        <atom:link href="https://awaisisane.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Tue, 10 Sep 2024 08:58:52 GMT</pubDate>
         <copyright><![CDATA[2024 Awais Isane]]></copyright>
         <language><![CDATA[en]]></language>
         <item>
             <title><![CDATA[About Me]]></title>
             <description><![CDATA[about me blog]]></description>
-            <link>https://awaisisane.com/about-me</link>
-            <guid isPermaLink="false">https://awaisisane.com/about-me</guid>
+            <link>https://awaisisane.github.io/about-me</link>
+            <guid isPermaLink="false">https://awaisisane.github.io/about-me</guid>
+            <dc:creator><![CDATA[Awais Isane]]></dc:creator>
+            <pubDate>Tue, 10 Sep 2024 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[deploy nextjs site to github pages]]></title>
+            <description><![CDATA[deploy nextjs site to github pages using github actions]]></description>
+            <link>https://awaisisane.github.io/deploy-nextjs-site-to-github-pages</link>
+            <guid isPermaLink="false">https://awaisisane.github.io/deploy-nextjs-site-to-github-pages</guid>
+            <dc:creator><![CDATA[Awais Isane]]></dc:creator>
+            <pubDate>Tue, 10 Sep 2024 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[how i created my portfolio site]]></title>
+            <description><![CDATA[how i created my portfolio site using nextjs with rss , markdown support and actions to deploy to github pages]]></description>
+            <link>https://awaisisane.github.io/how-i-created-my-blog-site</link>
+            <guid isPermaLink="false">https://awaisisane.github.io/how-i-created-my-blog-site</guid>
             <dc:creator><![CDATA[Awais Isane]]></dc:creator>
             <pubDate>Tue, 10 Sep 2024 00:00:00 GMT</pubDate>
         </item>
