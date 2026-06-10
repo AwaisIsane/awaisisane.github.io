@@ -1,0 +1,591 @@
+/* ── Solar Portfolio ───────────────────────────────────────── */
+:root {
+  --bg: #08080a;
+  --fg: #f4f3ef;
+  --fg-dim: rgba(244, 243, 239, 0.55);
+  --fg-faint: rgba(244, 243, 239, 0.16);
+  --fg-ghost: rgba(244, 243, 239, 0.07);
+  --font-display: "Archivo", "Helvetica Neue", Helvetica, sans-serif;
+  --font-mono: "Space Mono", "SF Mono", Menlo, monospace;
+}
+
+body.theme-blueprint {
+  --bg: #f2f0ea;
+  --fg: #131313;
+  --fg-dim: rgba(19, 19, 19, 0.55);
+  --fg-faint: rgba(19, 19, 19, 0.18);
+  --fg-ghost: rgba(19, 19, 19, 0.07);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-display);
+  transition: background 0.5s ease, color 0.5s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Starfield ─────────────────────────────────────────────── */
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── HUD corners ───────────────────────────────────────────── */
+.hud {
+  position: fixed;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.hud-name {
+  top: 36px;
+  left: 40px;
+}
+
+.hud-name h1 {
+  font-size: clamp(20px, 2.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.hud-name p {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.hud-meta {
+  top: 40px;
+  right: 40px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--fg-dim);
+  line-height: 1.9;
+}
+
+.hud-foot {
+  bottom: 36px;
+  left: 40px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--fg-dim);
+  line-height: 1.9;
+}
+
+.hud-hint {
+  bottom: 40px;
+  right: 40px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--fg-dim);
+  text-align: right;
+}
+
+/* ── Readout (bottom-center console line) ──────────────────── */
+#readout {
+  position: fixed;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  white-space: nowrap;
+  max-width: min(92vw, 900px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  transition: color 0.25s ease;
+}
+
+#readout.active { color: var(--fg); }
+
+#readout::before {
+  content: "▸ ";
+  color: var(--fg-faint);
+}
+
+/* ── The system ────────────────────────────────────────────── */
+#system {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(86vmin, 820px);
+  height: min(86vmin, 820px);
+  touch-action: none;
+  cursor: grab;
+}
+
+#system.dragging { cursor: grabbing; }
+
+/* orbit rings */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid var(--fg-ghost);
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+}
+
+.orbit.dashed { border-style: dashed; }
+.orbit.lit { border-color: var(--fg-faint); }
+
+/* degree ticks on outer orbit */
+.tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 10px;
+  background: var(--fg-faint);
+  pointer-events: none;
+}
+
+/* ── Sun ───────────────────────────────────────────────────── */
+#sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15%;
+  height: 15%;
+  border-radius: 50%;
+  background: var(--fg);
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  transition: background 0.5s ease;
+}
+
+#sun .initials {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(16px, 2.6vmin, 26px);
+  letter-spacing: 0.1em;
+  color: var(--bg);
+  transition: color 0.5s ease;
+}
+
+#sun::before,
+#sun::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--fg-faint);
+}
+
+#sun::before {
+  inset: -14%;
+  border-style: dashed;
+  animation: sunspin 60s linear infinite;
+}
+
+#sun::after { inset: -30%; }
+
+@keyframes sunspin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sun::before { animation: none; }
+}
+
+/* ── Planets ───────────────────────────────────────────────── */
+.planet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px; /* center on coordinate */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  outline-offset: 6px;
+}
+
+.planet .body {
+  position: relative;
+  border-radius: 50%;
+  background: var(--fg);
+  display: grid;
+  place-items: center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2), background 0.5s ease;
+}
+
+.planet .glyph {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--bg);
+  letter-spacing: 0;
+  transition: color 0.5s ease;
+}
+
+.planet:hover .body,
+.planet:focus-visible .body {
+  transform: scale(1.3);
+}
+
+.planet:active .body { transform: scale(1.12); }
+
+/* hover halo ring */
+.planet .body::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 1px solid var(--fg-dim);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.planet:hover .body::before,
+.planet:focus-visible .body::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* features ------------------------------------------------- */
+/* Saturn-style ring */
+.planet .saturn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 175%;
+  height: 38%;
+  border: 1px solid var(--fg-dim);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-22deg);
+  pointer-events: none;
+}
+
+/* small moon orbiting the planet */
+.planet .moonpath {
+  position: absolute;
+  inset: -11px;
+  border-radius: 50%;
+  animation: moonspin 5s linear infinite;
+  pointer-events: none;
+}
+
+.planet .moonpath::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--fg);
+  transition: background 0.5s ease;
+}
+
+@keyframes moonspin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planet .moonpath { animation: none; }
+}
+
+/* crater dots */
+.planet .crater {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--bg);
+  transition: background 0.5s ease;
+}
+
+/* equatorial band */
+.planet .band {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 62%;
+  height: 1.5px;
+  background: var(--bg);
+  border-radius: 2px;
+  transition: background 0.5s ease;
+}
+
+/* floating label next to hovered planet */
+.planet .tag {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 2px);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.planet.tag-left .tag {
+  left: auto;
+  right: calc(100% + 2px);
+  flex-direction: row-reverse;
+}
+
+.planet .tag::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--fg-dim);
+}
+
+.planet .tag span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.planet:hover .tag,
+.planet:focus-visible .tag {
+  opacity: 1;
+}
+
+/* ── Star Wars crawl overlay ───────────────────────────────── */
+#crawl-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--bg);
+}
+
+#crawl-overlay[hidden] { display: none; }
+
+.crawl-intro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 2.4vw, 24px);
+  line-height: 1.7;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.crawl-intro.run {
+  animation: crawl-intro-fade 4.2s ease forwards;
+}
+
+@keyframes crawl-intro-fade {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  78% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.crawl-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  perspective: 380px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 24%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 24%);
+}
+
+.crawl-text {
+  position: relative;
+  width: min(84vw, 640px);
+  top: 105vh;
+  transform-origin: 50% 100%;
+  transform: rotateX(22deg);
+  font-family: var(--font-display);
+  color: var(--fg);
+  text-align: justify;
+}
+
+.crawl-text.run {
+  animation: crawl-scroll 95s linear 4.4s forwards;
+}
+
+@keyframes crawl-scroll {
+  0% { top: 105vh; transform: rotateX(22deg) translateZ(20px); }
+  100% { top: -340vh; transform: rotateX(24deg) translateZ(-1700px); }
+}
+
+.crawl-text .ep {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 26px;
+  letter-spacing: 0.4em;
+  margin-bottom: 18px;
+}
+
+.crawl-text h2 {
+  text-align: center;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin-bottom: 56px;
+  text-transform: uppercase;
+}
+
+.crawl-text h3 {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  margin: 56px 0 36px;
+}
+
+.crawl-text p {
+  font-size: 29px;
+  font-weight: 500;
+  line-height: 1.55;
+  margin-bottom: 36px;
+}
+
+.crawl-text p strong { font-weight: 700; }
+
+.crawl-text .list {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  line-height: 2;
+}
+
+.crawl-text .finale {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-top: 70px;
+}
+
+/* end card */
+.crawl-end {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 36px;
+  text-align: center;
+  background: var(--bg);
+}
+
+.crawl-end[hidden] { display: none; }
+
+.crawl-end p {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.crawl-end-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.crawl-end-actions button,
+#crawl-close {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  padding: 12px 22px;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--fg-faint);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.crawl-end-actions button:hover,
+#crawl-close:hover {
+  border-color: var(--fg);
+}
+
+.crawl-end-actions button:active { background: var(--fg); color: var(--bg); }
+
+#crawl-close {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  z-index: 5;
+}
+
+/* reduced motion: static, scrollable text instead of the crawl */
+@media (prefers-reduced-motion: reduce) {
+  .crawl-stage {
+    perspective: none;
+    overflow-y: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .crawl-text,
+  .crawl-text.run {
+    animation: none;
+    top: 0;
+    transform: none;
+    padding: 90px 0 120px;
+  }
+  .crawl-intro.run { animation: none; opacity: 0; }
+}
+
+/* ── small screens ─────────────────────────────────────────── */
+/* mid-size: corner text collides with the centered readout — drop it */
+@media (max-width: 1180px) {
+  .hud-foot, .hud-hint { display: none; }
+}
+
+@media (max-width: 640px) {
+  .hud-name { top: 24px; left: 22px; }
+  .hud-meta, .hud-hint { display: none; }
+  .hud-foot { display: block; bottom: 70px; left: 22px; }
+  #readout { bottom: 26px; font-size: 10px; }
+  #system { width: 88vmin; height: 88vmin; }
+  .planet .tag { display: none; }
+  .crawl-text p { font-size: 21px; }
+  .crawl-text .list { font-size: 16px; }
+  .crawl-text h3 { font-size: 17px; }
+  .crawl-text .ep { font-size: 18px; }
+  #crawl-close { top: 18px; right: 18px; }
+}
